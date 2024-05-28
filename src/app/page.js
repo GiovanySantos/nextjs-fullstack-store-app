@@ -1,95 +1,51 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import React, { useEffect, useState } from 'react';
+
+import { CartModal, AuthModal } from '@/components/modals';
+import { Header } from '@/components/header';
+import { ProductList } from '@/components/product-list';
+
+import { ProductsProvider } from '@/components/contexts/products';
+import { CartProvider } from '@/components/contexts/cart';
+import { UserProvider } from '@/components/contexts/user';
+
+import './page.css';
+import { AccountModal } from '@/components/modals/account';
+
+const Home = () => {
+  const [isCheckout, setIsCheckout] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('authenticated');
+    window.location.reload();
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <UserProvider>
+      <ProductsProvider>
+        <CartProvider>
+          <main className="container">
+            <Header
+              setIsCheckout={setIsCheckout}
+              setShowAuthModal={setShowAuthModal}
+              setShowAccountModal={setShowAccountModal}
+              logout={logout}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+            {isCheckout && <CartModal setIsCheckout={setIsCheckout} />}
+            {showAuthModal && <AuthModal setShowAuthModal={setShowAuthModal} />}
+            {showAccountModal && (
+              <AccountModal setShowAccountModal={setShowAccountModal} />
+            )}
+            <ProductList />
+          </main>
+        </CartProvider>
+      </ProductsProvider>
+    </UserProvider>
   );
-}
+};
+
+export default Home;
