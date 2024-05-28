@@ -25,3 +25,5 @@ Second, now you can run the project by running the following commands on termina
 ou
 `yarn build`
 `yarn start`
+
+Third, now access http://localhost:3000/ and be happy
