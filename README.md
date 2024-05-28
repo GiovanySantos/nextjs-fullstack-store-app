@@ -14,9 +14,14 @@ The backend, with create, read, update and delete user features are under the ./
 
 First, you have to install node dependencies, open your terminal, go to this folder and run:
 
+`npm install`
+ou
 `yarn install`
 
 Second, now you can run the project by running the following commands on terminal:
 
+`npm run build`
+`npm start`
+ou
 `yarn build`
 `yarn start`
