@@ -4,7 +4,11 @@
 
 This is a fullstack app made just with NextJS
 
-In this project i created an ecommerce example app with signin and signup features, edit and delete users and a fake checkout to be improved later
+In this project I created an ecommerce example app with signin and signup features, edit and delete users and a fake checkout to be improved later
+
+This app fetches an fake api store to retreive products and add to a fake cart
+
+The backend, with create, read, update and delete user features are under the ./src/app/api path
 
 ## Setup
 
